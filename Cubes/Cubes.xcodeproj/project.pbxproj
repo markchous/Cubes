@@ -12,6 +12,9 @@
 		52153A871F0859B700B76200 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52153A861F0859B700B76200 /* ViewController.swift */; };
 		52153A8C1F0859B700B76200 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52153A8B1F0859B700B76200 /* Assets.xcassets */; };
 		52153A8F1F0859B700B76200 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52153A8D1F0859B700B76200 /* LaunchScreen.storyboard */; };
+		529C716C1F08A7A20023FCA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 529C716B1F08A2FC0023FCA3 /* Main.storyboard */; };
+		529C716D1F08A7A80023FCA3 /* PhycisCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529C716A1F08A2F50023FCA3 /* PhycisCategories.swift */; };
+		529C71701F08A8520023FCA3 /* Missle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529C716F1F08A8520023FCA3 /* Missle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,7 @@
 		52153A901F0859B700B76200 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		529C716A1F08A2F50023FCA3 /* PhycisCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhycisCategories.swift; sourceTree = "<group>"; };
 		529C716B1F08A2FC0023FCA3 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		529C716F1F08A8520023FCA3 /* Missle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Missle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 		52153A811F0859B700B76200 /* Cubes */ = {
 			isa = PBXGroup;
 			children = (
+				529C716E1F08A8490023FCA3 /* Models */,
 				529C71651F08A1CA0023FCA3 /* Util */,
 				52153A821F0859B700B76200 /* AppDelegate.swift */,
 				52153A861F0859B700B76200 /* ViewController.swift */,
@@ -74,6 +79,14 @@
 				529C716A1F08A2F50023FCA3 /* PhycisCategories.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		529C716E1F08A8490023FCA3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				529C716F1F08A8520023FCA3 /* Missle.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +150,7 @@
 				52153A851F0859B700B76200 /* art.scnassets in Resources */,
 				52153A8F1F0859B700B76200 /* LaunchScreen.storyboard in Resources */,
 				52153A8C1F0859B700B76200 /* Assets.xcassets in Resources */,
+				529C716C1F08A7A20023FCA3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +161,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				529C71701F08A8520023FCA3 /* Missle.swift in Sources */,
 				52153A871F0859B700B76200 /* ViewController.swift in Sources */,
+				529C716D1F08A7A80023FCA3 /* PhycisCategories.swift in Sources */,
 				52153A831F0859B700B76200 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

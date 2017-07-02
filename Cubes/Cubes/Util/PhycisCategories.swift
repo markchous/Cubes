@@ -9,9 +9,8 @@
 import Foundation
 
 struct PhysicsCategories {
-    static let cubeCategory: UInt32 = 0x1<<0
-    static let missleCategory: UInt32 = 0x1<<1
+    let rawValue: Int
     
-    static let cubeCategoryName = "cube"
-    static let missleCategoryName = "missle"
+    static let missle  = PhysicsCategories(rawValue: 1 << 0) // 00...01
+    static let cube = PhysicsCategories(rawValue: 1 << 1) // 00..10
 }

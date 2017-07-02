@@ -15,6 +15,8 @@ class ViewController: UIViewController {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    var currentMissle: Missle?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,7 +24,7 @@ class ViewController: UIViewController {
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
         
         // Automatically adjust lighting
         sceneView.automaticallyUpdatesLighting = true
@@ -35,8 +37,6 @@ class ViewController: UIViewController {
         
         // Set the scene to the view
         sceneView.scene = scene
-        
-        
         
         // Place cube in the scene
         placeCube()
@@ -69,14 +69,50 @@ class ViewController: UIViewController {
     
     @IBAction func didTapScreen(_ sender: Any) {
         print("didTapScreen")
+        if currentMissle == nil {
+            shootMissle()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
+                self.currentMissle?.removeFromParentNode()
+                self.currentMissle = nil
+                print("current missle removed from parent node")
+            })
+        }
     }
     
     // MARK: - Place cube
     
     private func placeCube() {
         let node = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
-        node.position = SCNVector3(0, 0, -1.0) // SceneKit/AR coordinates are in meters
+        node.position = SCNVector3(0, 0, -1.0)
         sceneView.scene.rootNode.addChildNode(node)
+    }
+    
+    // MARK: - Shoot missle
+    
+    private func shootMissle() {
+        let (direction, position) = getUserVector()
+        currentMissle = Missle()
+        currentMissle?.position = position
+        currentMissle?.physicsBody?.applyForce(direction, asImpulse: true)
+        
+        if let currentMissle = currentMissle {
+            sceneView.scene.rootNode.addChildNode(currentMissle)
+            print("shoot missle...")
+        }
+    }
+    
+    // MARK: - Get user vector
+    
+    private func getUserVector() -> (SCNVector3, SCNVector3) { // (direction, position)
+        if let frame = self.sceneView.session.currentFrame {
+            let mat = SCNMatrix4(frame.camera.transform) // 4x4 transform matrix describing camera in world space
+            let dir = SCNVector3(-1 * mat.m31, -1 * mat.m32, -1 * mat.m33) // orientation of camera in world space
+            let pos = SCNVector3(mat.m41, mat.m42, mat.m43) // location of camera in world space
+            
+            return (dir, pos)
+        }
+        return (SCNVector3(0, 0, -1), SCNVector3(0, 0, -0.2))
     }
     
 }
@@ -111,7 +147,9 @@ extension ViewController: ARSCNViewDelegate {
 
 extension ViewController: SCNPhysicsContactDelegate {
     
-    
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        
+    }
     
 }
 
