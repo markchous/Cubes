@@ -75,7 +75,7 @@ class ViewController: UIViewController {
     private func placeCube() {
         let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
         let node = SCNNode(geometry: box)
-        node.position = SCNVector3(0, 0, -1.0)
+        node.position = SCNVector3(getRanFloat(), getRanFloat(), -1.0)
         let shape = SCNPhysicsShape(geometry: box, options: nil)
         node.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         node.physicsBody?.isAffectedByGravity = false
@@ -116,6 +116,12 @@ class ViewController: UIViewController {
         return (SCNVector3(0, 0, -1), SCNVector3(0, 0, -0.2))
     }
     
+    // MARK: - Get random float
+    
+    private func getRanFloat() -> Float {
+        return Float(arc4random()) / Float(UINT32_MAX)
+    }
+    
 }
 
 // MARK: - ARSCNViewDelegate
@@ -154,6 +160,8 @@ extension ViewController: SCNPhysicsContactDelegate {
             contact.nodeB.physicsBody?.categoryBitMask == PhysicsCategories.cube.rawValue {
             removeNode(node: contact.nodeA)
             removeNode(node: contact.nodeB)
+            
+            placeCube()
         }
     }
     
