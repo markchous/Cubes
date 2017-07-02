@@ -15,8 +15,6 @@ class ViewController: UIViewController {
 
     @IBOutlet var sceneView: ARSCNView!
     
-    var currentMissle: Missle?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,7 +22,7 @@ class ViewController: UIViewController {
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = false
+        sceneView.showsStatistics = true
         
         // Automatically adjust lighting
         sceneView.automaticallyUpdatesLighting = true
@@ -69,22 +67,20 @@ class ViewController: UIViewController {
     
     @IBAction func didTapScreen(_ sender: Any) {
         print("didTapScreen")
-        if currentMissle == nil {
-            shootMissle()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
-                self.currentMissle?.removeFromParentNode()
-                self.currentMissle = nil
-                print("current missle removed from parent node")
-            })
-        }
+        shootMissle()
     }
     
     // MARK: - Place cube
     
     private func placeCube() {
-        let node = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
+        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
+        let node = SCNNode(geometry: box)
         node.position = SCNVector3(0, 0, -1.0)
+        let shape = SCNPhysicsShape(geometry: box, options: nil)
+        node.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        node.physicsBody?.isAffectedByGravity = false
+        node.physicsBody?.categoryBitMask = PhysicsCategories.cube.rawValue
+        node.physicsBody?.contactTestBitMask = PhysicsCategories.missle.rawValue
         sceneView.scene.rootNode.addChildNode(node)
     }
     
@@ -92,14 +88,19 @@ class ViewController: UIViewController {
     
     private func shootMissle() {
         let (direction, position) = getUserVector()
-        currentMissle = Missle()
-        currentMissle?.position = position
-        currentMissle?.physicsBody?.applyForce(direction, asImpulse: true)
+        let missle = Missle()
+        missle.position = position
+        missle.physicsBody?.applyForce(direction, asImpulse: true)
         
-        if let currentMissle = currentMissle {
-            sceneView.scene.rootNode.addChildNode(currentMissle)
-            print("shoot missle...")
-        }
+        sceneView.scene.rootNode.addChildNode(missle)
+        print("shoot missle...")
+    }
+    
+    // MARK: - Remove missle
+    
+    private func removeNode(node: SCNNode) {
+        node.removeFromParentNode()
+        print("Node removed from parent node")
     }
     
     // MARK: - Get user vector
@@ -148,7 +149,12 @@ extension ViewController: ARSCNViewDelegate {
 extension ViewController: SCNPhysicsContactDelegate {
     
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        
+        print("collision did begin")
+        if contact.nodeA.physicsBody?.categoryBitMask == PhysicsCategories.cube.rawValue ||
+            contact.nodeB.physicsBody?.categoryBitMask == PhysicsCategories.cube.rawValue {
+            removeNode(node: contact.nodeA)
+            removeNode(node: contact.nodeB)
+        }
     }
     
 }
