@@ -12,8 +12,15 @@ import ARKit
 import Foundation
 
 class ViewController: UIViewController {
-
+    
+    // MARK: - IBOutlets
+    
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet var scoreLabel: UILabel!
+    
+    var score = 0
+    
+    // MARK: - Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +58,10 @@ class ViewController: UIViewController {
         sceneView.session.run(configuration)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        configureUI()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -63,9 +74,16 @@ class ViewController: UIViewController {
         print("\(self) received memory warning!")
     }
     
-    // MARK: - Actions
+    // MARK: - ConfigureUI
     
-    @IBAction func didTapScreen(_ sender: Any) {
+    private func configureUI() {
+        let selfTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapScreen(_:)))
+        view.addGestureRecognizer(selfTapGesture)
+    }
+    
+    // MARK: - Gesture Handler(s)
+    
+    @objc private func didTapScreen(_ gesture: UITapGestureRecognizer) {
         print("didTapScreen")
         shootMissle()
     }
@@ -160,6 +178,12 @@ extension ViewController: SCNPhysicsContactDelegate {
             contact.nodeB.physicsBody?.categoryBitMask == PhysicsCategories.cube.rawValue {
             removeNode(node: contact.nodeA)
             removeNode(node: contact.nodeB)
+            
+            score += 1
+            
+            DispatchQueue.main.async(execute: {
+                self.scoreLabel.text = "Score: \(self.score)"
+            })
             
             placeCube()
         }

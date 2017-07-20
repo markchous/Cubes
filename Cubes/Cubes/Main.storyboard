@@ -7,29 +7,65 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="Cubes" customModuleProvider="target" sceneMemberID="viewController">
-                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="A1S-TG-zvm"/>
+                        <viewControllerLayoutGuide type="bottom" id="yOf-hi-Cfg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="A0S-bc-jZR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="EVq-BJ-yBN" appends="YES" id="OVF-9I-eNF"/>
-                        </connections>
-                    </arscnView>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEg-Jz-2LB">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <gestureRecognizers/>
+                            </arscnView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z07-TP-kdF">
+                                <rect key="frame" x="162.5" y="308.5" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.30196078430000001" green="0.49803921569999998" blue="0.61176470589999998" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="J7j-4s-Avf"/>
+                                    <constraint firstAttribute="height" constant="50" id="rKu-gj-TXm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="50"/>
+                                <color key="textColor" red="1" green="0.32156862749999998" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fLX-rV-hfe">
+                                <rect key="frame" x="20" y="40" width="64" height="21"/>
+                                <color key="backgroundColor" red="0.30196078430000001" green="0.49803921569999998" blue="0.61176470589999998" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fLX-rV-hfe" firstAttribute="leading" secondItem="A0S-bc-jZR" secondAttribute="leading" constant="20" id="5hN-F2-gXv"/>
+                            <constraint firstAttribute="trailing" secondItem="HEg-Jz-2LB" secondAttribute="trailing" id="7XW-hg-0BB"/>
+                            <constraint firstItem="yOf-hi-Cfg" firstAttribute="top" secondItem="HEg-Jz-2LB" secondAttribute="bottom" id="9RL-UB-saa"/>
+                            <constraint firstItem="HEg-Jz-2LB" firstAttribute="leading" secondItem="A0S-bc-jZR" secondAttribute="leading" id="FKt-hQ-Z5v"/>
+                            <constraint firstItem="Z07-TP-kdF" firstAttribute="centerX" secondItem="A0S-bc-jZR" secondAttribute="centerX" id="HRv-WC-KUs"/>
+                            <constraint firstItem="fLX-rV-hfe" firstAttribute="top" secondItem="A1S-TG-zvm" secondAttribute="bottom" constant="20" id="mz0-St-7Ak"/>
+                            <constraint firstItem="HEg-Jz-2LB" firstAttribute="top" secondItem="A1S-TG-zvm" secondAttribute="bottom" id="qlp-NN-IC7"/>
+                            <constraint firstItem="Z07-TP-kdF" firstAttribute="centerY" secondItem="A0S-bc-jZR" secondAttribute="centerY" id="zr8-Uj-rdL"/>
+                        </constraints>
+                    </view>
                     <connections>
-                        <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="sceneView" destination="HEg-Jz-2LB" id="xkn-NU-Fpf"/>
+                        <outlet property="scoreLabel" destination="fLX-rV-hfe" id="6fa-fN-NtQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="EVq-BJ-yBN">
-                    <connections>
-                        <action selector="didTapScreen:" destination="BV1-FR-VrT" id="6sQ-Y9-KhL"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
         </scene>
     </scenes>
